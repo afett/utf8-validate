@@ -159,7 +159,7 @@ static inline utf8_state next_state(utf8_state state, unsigned char c)
 	default:
 		/*
 		 * This should not happen, unless you feed an error
-		 * state or an unitialized utf8_state to this function.
+		 * state or an uninitialized utf8_state to this function.
 		 */
 		assert(false && "invalid utf8 state");
 	}
