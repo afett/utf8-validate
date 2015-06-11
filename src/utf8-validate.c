@@ -93,21 +93,21 @@ bool utf8_validate_str(const char * const str)
 
 #define SEQ_END(n) SEQ_ ## n ## _END
 
-#define SEQ1_HELPER(s, r0) \
+#define SEQ1_HELPER(s, r0)                                     \
 case (s * 4) + 0: if (r0) return 0;                            \
 
-#define SEQ2_HELPER(s, r0, r1) \
+#define SEQ2_HELPER(s, r0, r1)                                 \
 case (s * 4) + 0: if (r0) return (s * 4) + 1; goto SEQ_END(s); \
 case (s * 4) + 1: if (r1) return 0;           return -1;       \
 SEQ_END(s):
 
-#define SEQ3_HELPER(s, r0, r1, r2) \
+#define SEQ3_HELPER(s, r0, r1, r2)                             \
 case (s * 4) + 0: if (r0) return (s * 4) + 1; goto SEQ_END(s); \
 case (s * 4) + 1: if (r1) return (s * 4) + 2; return -1;       \
 case (s * 4) + 2: if (r2) return 0;           return -1;       \
 SEQ_END(s):
 
-#define SEQ4_HELPER(s, r0, r1, r2, r3) \
+#define SEQ4_HELPER(s, r0, r1, r2, r3)                         \
 case (s * 4) + 0: if (r0) return (s * 4) + 1; goto SEQ_END(s); \
 case (s * 4) + 1: if (r1) return (s * 4) + 2; return -1;       \
 case (s * 4) + 2: if (r2) return (s * 4) + 3; return -1;       \
