@@ -123,7 +123,7 @@ SEQ_END(s):
 
 #define VALUE(v)     (c == v)
 #define RANGE(s, e)  (c >= s && c <= e)
-/* workaroud for "-Wtype-limits" as c >= s is allways true for
+/* workaround for "-Wtype-limits" as c >= s is allways true for
  * the unsigned char in the case of c == 0 */
 #define EGNAR(s, e) ((c >= s + 1 && c <= e) || c == s)
 
