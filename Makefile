@@ -20,6 +20,10 @@ LIB_SRC = src/utf8-validate.c
 LIB_OBJ = $(LIB_SRC:%.c=%.o)
 LIB_COV_OBJ = $(LIB_SRC:%.c=%.cov.o)
 
+BIN = isutf8
+BIN_SRC = src/isutf8.c
+BIN_OBJ = $(BIN_SRC:%.c=%.o)
+
 TEST_SRC = tests/test-utf8-validate.c
 TEST_OBJ = $(TEST_SRC:%.c=%.cov.o)
 TEST_LIB = libutf8-validate_test.a
@@ -28,10 +32,13 @@ ALL_OBJ = $(LIB_OBJ) $(TEST_OBJ) $(COV_OBJ)
 GCNO = $(ALL_OBJ:%.o=%.gcno)
 GCDA = $(ALL_OBJ:%.o=%.gcda)
 
-all: $(TARGET) $(TESTS)
+all: $(TARGET) $(BIN) $(TESTS)
 
 $(TARGET): $(LIB_OBJ)
 	$(CC) -o $@ $(LIB_OBJ) $(LDFLAGS) -shared $(LIBS)
+
+$(BIN): $(BIN_OBJ)
+	$(CC) -o $@ $(BIN_OBJ) $(LDFLAGS) -lutf8-validate
 
 $(TEST_LIB): $(LIB_COV_OBJ)
 	ar rcs $@ $^
@@ -66,6 +73,6 @@ install: all
 	install -m 644 include/*.h $(PREFIX)/include/
 
 clean:
-	rm -rf $(TARGET) $(TESTS) $(TEST_LIB) $(ALL_OBJ) $(GCNO) $(GCDA) coverage/*
+	rm -rf $(TARGET) $(BIN) $(TESTS) $(TEST_LIB) $(BIN_OBJ) $(ALL_OBJ) $(GCNO) $(GCDA) coverage/*
 
 .PHONY: all clean run_tests run_valgrind run_gdb coverage
