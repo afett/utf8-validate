@@ -16,24 +16,24 @@ PREFIX ?= /usr/local
 TARGET = libutf8-validate.so
 TESTS = test-utf8-validate
 
-SRC = src/utf8-validate.c
-OBJ = $(SRC:%.c=%.o)
-COV_OBJ = $(SRC:%.c=%.cov.o)
+LIB_SRC = src/utf8-validate.c
+LIB_OBJ = $(LIB_SRC:%.c=%.o)
+LIB_COV_OBJ = $(LIB_SRC:%.c=%.cov.o)
 
 TEST_SRC = tests/test-utf8-validate.c
 TEST_OBJ = $(TEST_SRC:%.c=%.cov.o)
 TEST_LIB = libutf8-validate_test.a
 
-ALL_OBJ = $(OBJ) $(TEST_OBJ) $(COV_OBJ)
+ALL_OBJ = $(LIB_OBJ) $(TEST_OBJ) $(COV_OBJ)
 GCNO = $(ALL_OBJ:%.o=%.gcno)
 GCDA = $(ALL_OBJ:%.o=%.gcda)
 
 all: $(TARGET) $(TESTS)
 
-$(TARGET): $(OBJ)
-	$(CC) -o $@ $(OBJ) $(LDFLAGS) -shared $(LIBS)
+$(TARGET): $(LIB_OBJ)
+	$(CC) -o $@ $(LIB_OBJ) $(LDFLAGS) -shared $(LIBS)
 
-$(TEST_LIB): $(COV_OBJ)
+$(TEST_LIB): $(LIB_COV_OBJ)
 	ar rcs $@ $^
 
 %.cov.o : %.c
