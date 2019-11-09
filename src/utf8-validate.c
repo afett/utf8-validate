@@ -94,7 +94,8 @@ bool utf8_validate_str(const char * const str)
 #define SEQ_END(n) SEQ_ ## n ## _END
 
 #define SEQ1_HELPER(s, r0)                                     \
-case (s * 4) + 0: if (r0) return 0;                            \
+case (s * 4) + 0: if (r0) return 0; goto SEQ_END(s);           \
+SEQ_END(s):
 
 #define SEQ2_HELPER(s, r0, r1)                                 \
 case (s * 4) + 0: if (r0) return (s * 4) + 1; goto SEQ_END(s); \
